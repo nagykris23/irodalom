@@ -1,0 +1,26 @@
+th:nth-child(2){
+    background-color: rgb(139, 123, 123);
+}
+
+ 
+td:first-child, th:first-child{
+    background-color: rgba(164, 196, 152, 0.5);
+}
+
+ td:last-child,th:last-child{
+    background-color: rgb(166, 147, 184);
+}
+
+ tr,th,td{
+    border: 1px solid, rgb(9, 2, 26);
+   
+    
+}
+.error{
+    color: red;
+    border: 1px solid red;
+}
+table{
+    border-collapse: collapse;
+    text-align: center;
+}
