@@ -56,12 +56,12 @@ table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
 //függvény bevezetése
 function rendermenu() {
-//ciklus a tömb elemeinek bejárására
-for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
-  const adat = adatok[i]//adatok tömb aktuális eleme
+  //ciklus a tömb elemeinek bejárására
+  for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
+    const adat = adatok[i]//adatok tömb aktuális eleme
     const sor = document.createElement('tr')//sor létrehozása
     tbody.appendChild(sor)//sor hozzáadása a törzshez
-    
+
     const tdszerzo = document.createElement('td')//cella létrehozása
     tdszerzo.innerHTML = adat.szerzo//cella tartalmának megadása
     sor.appendChild(tdszerzo)//cella hozzáadása a sorhoz
@@ -73,13 +73,13 @@ for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
     const tdszerelem1 = document.createElement('td')//harmadik cella létrehozása
     tdszerelem1.innerHTML = adat.szerelem1//harmadik cella tartalmának megadása
     //ha nincs második szerelme akkor egybe vonja a 2 cellát
-    if(adat.szerelem2 === undefined){//ha nincs második szerelmek akkor egybe vonja a 2 cellát
+    if (adat.szerelem2 === undefined) {//ha nincs második szerelmek akkor egybe vonja a 2 cellát
       tdszerelem1.colSpan = 2// összevonja a két cellát
     }
     sor.appendChild(tdszerelem1)//harmadik cella hozzáadása a sorhoz
 
     //ha van második szerelme akkor külön cellába kerül
-    if(adat.szerelem2 !== undefined){//ha van második szerelme akkor külön cellába kerül
+    if (adat.szerelem2 !== undefined) {//ha van második szerelme akkor külön cellába kerül
       const tdszerelem2 = document.createElement('td')//negyedik cella létrehozása
       tdszerelem2.innerHTML = adat.szerelem2//negyedik cella tartalmának megadása
       sor.appendChild(tdszerelem2)//negyedik cella hozzáadása a sorhoz
@@ -87,5 +87,28 @@ for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
 
   }
 }
+//esemény kezelő függvény bevezetése
+document.getElementById("form").addEventListener("submit", function () {
+  e.preventDefault()//esemény megállítása
+
+  const szerzoHtmlelement = document.getElementById("szerzo")//szerző input értékének lekérése
+  const szerzovalue = szerzoHtmlelement.value//szerző input értékének lekérése
+  const korszakHtmlelement = document.getElementById("korszak")//korszak input értékének lekérése
+  const korszakvalue = korszakHtmlelement.value//korszak input értékének lekérése
+  const szerelem1Htmlelement = document.getElementById("szerelem1")//első szerelme input értékének lekérése
+  const szerelem1value = szerelem1Htmlelement.value//első szerelme input értékének lekérése
+  const szerelem2Htmlelement = document.getElementById("szerelem2")//második szerelme input értékének lekérése
+  const szerelem2value = szerelem2Htmlelement.value//második szerelme input értékének lekérése
+
+  const ujszerzo = {
+    szerzo: szerzovalue,//szerző input értékének lekérése
+    korszak: korszakvalue,//korszak input értékének lekérése
+    szerelem1: szerelem1value,//első szerelme input értékének lekérése
+    szerelem2: szerelem2value == '' ? undefined : szerelem2value//második szerelme input értékének lekérése ha nincs akkor undefined
+  }
+  adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
+  tbody.innerHTML = ""//törzs tartalmának törlése
+  rendermenu()//függvény meghívása
+
+})
 rendermenu()//függvény meghívása
- 
