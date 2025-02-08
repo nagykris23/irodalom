@@ -54,7 +54,8 @@ const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
 //ciklus a tömb elemeinek bejárására
-for (const adat of adatok) {//adatok tömb elemeinek bejárása
+for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
+  const adat = adatok[i]//adatok tömb aktuális eleme
     const sor = document.createElement('tr')//sor létrehozása
     tbody.appendChild(sor)//sor hozzáadása a törzshez
     
