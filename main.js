@@ -54,6 +54,8 @@ tablehead.appendChild(thszerelem)//cella hozzá adása a fejléc sorához
 const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
+//függvény bevezetése
+function rendermenu() {
 //ciklus a tömb elemeinek bejárására
 for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
   const adat = adatok[i]//adatok tömb aktuális eleme
@@ -84,5 +86,6 @@ for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
     }
 
   }
-
+}
+rendermenu()//függvény meghívása
  
