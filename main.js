@@ -30,7 +30,7 @@ const adatok = [
   }
 ]
 
-const table = document.createElement("table")//table elem létrehozása
+const table = document.createElement("table")//táblázat létrehozása
 document.body.appendChild(table)//table appendChildolása a bodyhoz
 const thead = document.createElement('thead')//thead elem létrehozása
 table.appendChild(thead)//thead appendChildolása a táblázathoz
@@ -48,7 +48,6 @@ tablehead.appendChild(thkorszak)//cella hozzá adása a fejléc sorához
 
 const thszerelem = document.createElement('th')//második szerelmének a fejléc cella létrehozása
 thszerelem.innerHTML = adatok[0].szerelem// megadjuk a cella tartalmát a tömbbünk segítségével
-thszerelem.colSpan = 2//összevonjuk a két cellát ha üres a második szerelme
 tablehead.appendChild(thszerelem)//cella hozzá adása a fejléc sorához
 
 //táblázat törzsének létrehozása
@@ -71,10 +70,19 @@ for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
 
     const tdszerelem1 = document.createElement('td')//harmadik cella létrehozása
     tdszerelem1.innerHTML = adat.szerelem1//harmadik cella tartalmának megadása
+    //ha nincs második szerelme akkor egybe vonja a 2 cellát
+    if(adat.szerelem2 === undefined){//ha nincs második szerelmek akkor egybe vonja a 2 cellát
+      tdszerelem1.colSpan = 2// összevonja a két cellát
+    }
     sor.appendChild(tdszerelem1)//harmadik cella hozzáadása a sorhoz
 
-    const tdszerelem2 = document.createElement('td')//negyedik cella létrehozása
-    tdszerelem2.innerHTML = adat.szerelem2|| ''//negyedik cella tartalmának beállítása 
-    sor.appendChild(tdszerelem2)//negyedik cella hozzáadása a sorhoz
+    //ha van második szerelme akkor külön cellába kerül
+    if(adat.szerelem2 !== undefined){//ha van második szerelme akkor külön cellába kerül
+      const tdszerelem2 = document.createElement('td')//negyedik cella létrehozása
+      tdszerelem2.innerHTML = adat.szerelem2//negyedik cella tartalmának megadása
+      sor.appendChild(tdszerelem2)//negyedik cella hozzáadása a sorhoz
+    }
 
   }
+
+ 
