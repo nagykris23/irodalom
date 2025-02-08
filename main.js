@@ -32,6 +32,8 @@ const adatok = [
 
 const table = document.createElement("table")//table elem létrehozása
 document.body.appendChild(table)//table appendChildolása a bodyhoz
+const thead = document.createElement('thead')//thead elem létrehozása
+table.appendChild(thead)//thead appendChildolása a táblázathoz
 
 const tablehead = document.createElement('tr') // tr fejléc létrehozása
 table.appendChild(tablehead)// a  sor hozzáadása a táblázasthoz
