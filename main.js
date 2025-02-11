@@ -88,18 +88,42 @@ function rendermenu() {
   }
 }
 //esemény kezelő függvény bevezetése
-document.getElementById("form").addEventListener("submit", function () {
-  e.preventDefault()//esemény megállítása
+document.getElementById("form").addEventListener("submit", function (e) {
+e.preventDefault()//esemény megállítása
 
-  const szerzoHtmlelement = document.getElementById("szerzo")//szerző input értékének lekérése
-  const szerzovalue = szerzoHtmlelement.value//szerző input értékének lekérése
-  const korszakHtmlelement = document.getElementById("korszak")//korszak input értékének lekérése
-  const korszakvalue = korszakHtmlelement.value//korszak input értékének lekérése
-  const szerelem1Htmlelement = document.getElementById("szerelem1")//első szerelme input értékének lekérése
-  const szerelem1value = szerelem1Htmlelement.value//első szerelme input értékének lekérése
-  const szerelem2Htmlelement = document.getElementById("szerelem2")//második szerelme input értékének lekérése
-  const szerelem2value = szerelem2Htmlelement.value//második szerelme input értékének lekérése
+  const active = e.currentTarget//aktuális elem
+  const errormezo = active.querySelector(".error")//error mező lekérése
+  for (let i = 0; i < errormezo.length; i++) {//ciklus a hibák kiírására
+    errormezo[i].innerHTML = ""//hibák kiírásának törlése
+  }
+  let validated = true//validálás igaz értékkel kezdődik
 
+  const szerzovalue = document.getElementById("kolto_nev").value//szerző input értékének lekérése
+  const korszakvalue = document.getElementById("korszak").value//korszak input értékének lekérése
+  const szerelem1value = document.getElementById("szerelem1").value//első szerelme input értékének lekérése
+  const szerelem2value = document.getElementById("szerelem2").value//második szerelme input értékének lekérése
+  
+  //érvényesség tesztelése
+  if (szerzovalue ===''){//ha a szerző mező üres
+    const parent = document.getElementById("kolto_nev").parentElement//szerző mező lekérése
+    const error = parent.querySelector(".error")//hiba lekérése
+    error.innerHTML = "Kötelező megadni a Szerzőt"//hiba kiírása
+    validated = false//validálás hamis értékkel
+  }
+  if (korszakvalue === '') {//ha a korszak mező üres
+    const parent = document.getElementById("korszak").parentElement//korszak mező lekérése
+    const error = parent.querySelector(".error")//hiba lekérése
+    error.innerHTML = "Kötelező megadni a korszakot"//hiba kiírása
+    validated = false//validálás hamis értékkel
+  }
+  if (szerelem1value === '') {//ha az első szerelme mező üres
+    const parent = document.getElementById("szerelem1").parentElement//első szerelme mező lekérése
+    const error = parent.querySelector(".error")//hiba lekérése
+    error.innerHTML = "Az első szerelem kötelező mező"//hiba kiírása
+    validated = false//validálás hamis értékkel
+  }
+
+  if(validated){
   const ujszerzo = {
     szerzo: szerzovalue,//szerző input értékének lekérése
     korszak: korszakvalue,//korszak input értékének lekérése
@@ -109,6 +133,6 @@ document.getElementById("form").addEventListener("submit", function () {
   adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
   tbody.innerHTML = ""//törzs tartalmának törlése
   rendermenu()//függvény meghívása
-
+}
 })
 rendermenu()//függvény meghívása
