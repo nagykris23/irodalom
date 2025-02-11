@@ -102,27 +102,18 @@ e.preventDefault()//esemény megállítása
   const korszakvalue = document.getElementById("korszak").value//korszak input értékének lekérése
   const szerelem1value = document.getElementById("szerelem1").value//első szerelme input értékének lekérése
   const szerelem2value = document.getElementById("szerelem2").value//második szerelme input értékének lekérése
+
   
   //érvényesség tesztelése
-  if (szerzovalue ===''){//ha a szerző mező üres
-    const parent = document.getElementById("kolto_nev").parentElement//szerző mező lekérése
-    const error = parent.querySelector(".error")//hiba lekérése
-    error.innerHTML = "Kötelező megadni a Szerzőt"//hiba kiírása
-    validated = false//validálás hamis értékkel
+  if(!validatefiled(szerzovalue, "Kötelező  megadni a szerző nevét")){//szerző mező validálása
+    validated = false//ha nem validált akkor hamis lesz
   }
-  if (korszakvalue === '') {//ha a korszak mező üres
-    const parent = document.getElementById("korszak").parentElement//korszak mező lekérése
-    const error = parent.querySelector(".error")//hiba lekérése
-    error.innerHTML = "Kötelező megadni a korszakot"//hiba kiírása
-    validated = false//validálás hamis értékkel
+  if(!validatefiled(korszakvalue, "Kötelező  megadni a korszakot")){//korszak mező validálása
+    validated = false//ha nem validált akkor hamis lesz
   }
-  if (szerelem1value === '') {//ha az első szerelme mező üres
-    const parent = document.getElementById("szerelem1").parentElement//első szerelme mező lekérése
-    const error = parent.querySelector(".error")//hiba lekérése
-    error.innerHTML = "Az első szerelem kötelező mező"//hiba kiírása
-    validated = false//validálás hamis értékkel
+  if(!validatefiled(szerelem1value, "Kötelező  megadni az első szerelmet")){//első szerelem mező validálása
+    validated = false//ha nem validált akkor hamis lesz
   }
-
   if(validated){
   const ujszerzo = {
     szerzo: szerzovalue,//szerző input értékének lekérése
@@ -133,6 +124,17 @@ e.preventDefault()//esemény megállítása
   adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
   tbody.innerHTML = ""//törzs tartalmának törlése
   rendermenu()//függvény meghívása
+  active.reset()//mezők törlése
 }
 })
+function validatefiled(bemenet, error) {//validálás függvény
+  let validation = true//validálás igaz értékkel kezdődik
+  if (bemenet.value === " ") {//ha nincs érték akkor hiba
+    const parant= bemenet.parentElement//szülő elem lekérése
+    const errorfield = parant.querySelector(".error")//error mező lekérése  
+    errorfield.innerHTML = error//hiba kiírása
+    validation = false//ha nincs érték akkor hamis lesz
+  }
+  return validation//igaz érték visszaadása
+}
 rendermenu()//függvény meghívása
