@@ -56,6 +56,7 @@ table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
 //függvény bevezetése
 function rendermenu() {
+  tbody.innerHTML = ""//törzs tartalmának törlése
   //ciklus a tömb elemeinek bejárására
   for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
     const adat = adatok[i]//adatok tömb aktuális eleme
@@ -89,50 +90,49 @@ function rendermenu() {
 }
 //esemény kezelő függvény bevezetése
 document.getElementById("form").addEventListener("submit", function (e) {
-e.preventDefault()//esemény megállítása
+  e.preventDefault()//esemény megállítása
 
   const active = e.currentTarget//aktuális elem
-  const errormezo = active.querySelector(".error")//error mező lekérése
-  for (let i = 0; i < errormezo.length; i++) {//ciklus a hibák kiírására
-    errormezo[i].innerHTML = ""//hibák kiírásának törlése
-  }
-  let validated = true//validálás igaz értékkel kezdődik
-
+  const errormezo = active.querySelectorAll(".error")//error mező lekérése
+  
   const szerzovalue = document.getElementById("kolto_nev").value//szerző input értékének lekérése
   const korszakvalue = document.getElementById("korszak").value//korszak input értékének lekérése
   const szerelem1value = document.getElementById("szerelem1").value//első szerelme input értékének lekérése
   const szerelem2value = document.getElementById("szerelem2").value//második szerelme input értékének lekérése
-
+  
+  let validated = true//validálás igaz értékkel kezdődik
+  for (let i = 0; i < errormezo.length; i++) {//ciklus a hibák kiírására
+    errormezo[i].innerHTML = ""//hibák kiírásának törlése
+  }
   
   //érvényesség tesztelése
-  if(!validatefiled(szerzovalue, "Kötelező  megadni a szerző nevét")){//szerző mező validálása
+  if(!validatefiled(szerzovalue, errormezo[0], "Kötelező megadni a szerző nevét")){//szerző mező validálása
     validated = false//ha nem validált akkor hamis lesz
   }
-  if(!validatefiled(korszakvalue, "Kötelező  megadni a korszakot")){//korszak mező validálása
+  if(!validatefiled(korszakvalue, errormezo[1], "Kötelező megadni a korszakot")){//korszak mező validálása
     validated = false//ha nem validált akkor hamis lesz
   }
-  if(!validatefiled(szerelem1value, "Kötelező  megadni az első szerelmet")){//első szerelem mező validálása
+  if(!validatefiled(szerelem1value, errormezo[2], "Kötelező megadni az első szerelmet")){//első szerelem mező validálása
     validated = false//ha nem validált akkor hamis lesz
   }
   if(validated){
-  const ujszerzo = {
-    szerzo: szerzovalue,//szerző input értékének lekérése
-    korszak: korszakvalue,//korszak input értékének lekérése
-    szerelem1: szerelem1value,//első szerelme input értékének lekérése
-    szerelem2: szerelem2value == '' ? undefined : szerelem2value//második szerelme input értékének lekérése ha nincs akkor undefined
+    const ujszerzo = {
+      szerzo: szerzovalue,//szerző input értékének lekérése
+      korszak: korszakvalue,//korszak input értékének lekérése
+      szerelem1: szerelem1value,//első szerelme input értékének lekérése
+      szerelem2: szerelem2value == '' ? undefined : szerelem2value//második szerelme input értékének lekérése ha nincs akkor undefined
+    }
+    adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
+    tbody.innerHTML = ""//törzs tartalmának törlése
+    rendermenu()//függvény meghívása
+    active.reset()//mezők törlése
   }
-  adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
-  tbody.innerHTML = ""//törzs tartalmának törlése
-  rendermenu()//függvény meghívása
-  active.reset()//mezők törlése
-}
 })
-function validatefiled(bemenet, error) {//validálás függvény
+
+function validatefiled(bemenet, errorField, error) {//validálás függvény
   let validation = true//validálás igaz értékkel kezdődik
-  if (bemenet.value === " ") {//ha nincs érték akkor hiba
-    const parant= bemenet.parentElement//szülő elem lekérése
-    const errorfield = parant.querySelector(".error")//error mező lekérése  
-    errorfield.innerHTML = error//hiba kiírása
+  if (bemenet.trim() === "") {//ha nincs érték akkor hiba
+    errorField.innerHTML = error//hiba kiírása
     validation = false//ha nincs érték akkor hamis lesz
   }
   return validation//igaz érték visszaadása
