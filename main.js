@@ -98,7 +98,8 @@ document.getElementById("form").addEventListener("submit", function (e) {
   const szerzovalue = document.getElementById("kolto_nev").value//szerző input értékének lekérése
   const korszakvalue = document.getElementById("korszak").value//korszak input értékének lekérése
   const szerelem1value = document.getElementById("szerelem1").value//első szerelme input értékének lekérése
-  const szerelem2value = document.getElementById("szerelem2").value//második szerelme input értékének lekérése
+  const szerelemcheckbox = document.getElementById("masodik").checked//második szerelme input mezőjének lekérése
+  const szerelem2value = szerelemcheckbox ? document.getElementById("szerelem2").value : undefined//második szerelme input értékének lekérése
   
   let validated = true//validálás igaz értékkel kezdődik
   for (let i = 0; i < errormezo.length; i++) {//ciklus a hibák kiírására
@@ -115,6 +116,13 @@ document.getElementById("form").addEventListener("submit", function (e) {
   if(!validatefiled(szerelem1value, errormezo[2], "Kötelező megadni az első szerelmet")){//első szerelem mező validálása
     validated = false//ha nem validált akkor hamis lesz
   }
+  if(szerelemcheckbox && (szerelem2value === undefined || szerelem2value.trim() === "")){//második szerelem mező validálása
+    const parentElement = document.getElementById("szerelem2").parentElement//második szerelme input mezőjének szülő elemének lekérése
+    const errorElement = parentElement.querySelector(".error")//második szerelme input mezőjének hiba elemének lekérése
+    errorElement.innerHTML = "Kötelező megadni a szerelmet"//második szerelme input mezőjének hiba elemének törlése 
+    validated = false//ha nem validált akkor hamis lesz
+  }
+
   if(validated){
     const ujszerzo = {
       szerzo: szerzovalue,//szerző input értékének lekérése
