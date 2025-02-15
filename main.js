@@ -89,60 +89,67 @@ function rendermenu() {
   }
 }
 //esemény kezelő függvény bevezetése
+
 document.getElementById("form").addEventListener("submit", function (e) {
-  e.preventDefault()//esemény megállítása
+  e.preventDefault(); // esemény megállítása
 
-  const active = e.currentTarget//aktuális elem
-  const errormezo = active.querySelectorAll(".error")//error mező lekérése
-  
-  const szerzovalue = document.getElementById("kolto_nev").value//szerző input értékének lekérése
-  const korszakvalue = document.getElementById("korszak").value//korszak input értékének lekérése
-  const szerelem1value = document.getElementById("szerelem1").value//első szerelme input értékének lekérése
-  const szerelemcheckbox = document.getElementById("masodik").checked//második szerelme input mezőjének lekérése
-  const szerelem2value = szerelemcheckbox ? document.getElementById("szerelem2").value : undefined//második szerelme input értékének lekérése
-  
-  let validated = true//validálás igaz értékkel kezdődik
-  for (let i = 0; i < errormezo.length; i++) {//ciklus a hibák kiírására
-    errormezo[i].innerHTML = ""//hibák kiírásának törlése
-  }
-  
-  //érvényesség tesztelése
-  if(!validatefiled(szerzovalue, errormezo[0], "Kötelező megadni a szerző nevét")){//szerző mező validálása
-    validated = false//ha nem validált akkor hamis lesz
-  }
-  if(!validatefiled(korszakvalue, errormezo[1], "Kötelező megadni a korszakot")){//korszak mező validálása
-    validated = false//ha nem validált akkor hamis lesz
-  }
-  if(!validatefiled(szerelem1value, errormezo[2], "Kötelező megadni az első szerelmet")){//első szerelem mező validálása
-    validated = false//ha nem validált akkor hamis lesz
-  }
-  if(szerelemcheckbox && (szerelem2value === undefined || szerelem2value.trim() === "")){//második szerelem mező validálása
-    const parentElement = document.getElementById("szerelem2").parentElement//második szerelme input mezőjének szülő elemének lekérése
-    const errorElement = parentElement.querySelector(".error")//második szerelme input mezőjének hiba elemének lekérése
-    errorElement.innerHTML = "Kötelező megadni a szerelmet"//második szerelme input mezőjének hiba elemének törlése 
-    validated = false//ha nem validált akkor hamis lesz
+  const active = e.currentTarget; // aktuális elem
+  const errormezo = active.querySelectorAll(".error"); // error mező lekérése
+
+  const szerzovalue = document.getElementById("kolto_nev").value; // szerző input értékének lekérése
+  const korszakvalue = document.getElementById("korszak").value; // korszak input értékének lekérése
+  const szerelem1value = document.getElementById("szerelem1").value; // első szerelme input értékének lekérése
+  const szerelemcheckbox = document.getElementById("masodik").checked; // második szerelme input mezőjének lekérése
+  const szerelem2value = szerelemcheckbox ? document.getElementById("szerelem2").value : undefined; // második szerelme input értékének lekérése
+
+  let validated = true; // validálás igaz értékkel kezdődik
+  for (let i = 0; i < errormezo.length; i++) { // ciklus a hibák kiírására
+    errormezo[i].innerHTML = ""; // hibák kiírásának törlése
   }
 
-  if(validated){
+  // Érvényesség tesztelése
+  if (!validateField(szerzovalue, errormezo[0], "Kötelező megadni a szerző nevét")) { // szerző mező validálása
+    validated = false; // ha nem validált akkor hamis lesz
+  }
+  if (!validateField(korszakvalue, errormezo[1], "Kötelező megadni a korszakot")) { // korszak mező validálása
+    validated = false; // ha nem validált akkor hamis lesz
+  }
+  if (!validateField(szerelem1value, errormezo[2], "Kötelező megadni az első szerelmet")) { // első szerelem mező validálása
+    validated = false; // ha nem validált akkor hamis lesz
+  }
+  if (!validateCheckbox(szerelemcheckbox, szerelem2value, errormezo[3], "Kötelező megadni a szerelmet")) { // második szerelem mező validálása
+    validated = false; // ha nem validált akkor hamis lesz
+  }
+
+  if (validated) {
     const ujszerzo = {
-      szerzo: szerzovalue,//szerző input értékének lekérése
-      korszak: korszakvalue,//korszak input értékének lekérése
-      szerelem1: szerelem1value,//első szerelme input értékének lekérése
-      szerelem2: szerelem2value == '' ? undefined : szerelem2value//második szerelme input értékének lekérése ha nincs akkor undefined
-    }
-    adatok.push(ujszerzo)//új elem hozzáadása a tömbhöz
-    tbody.innerHTML = ""//törzs tartalmának törlése
-    rendermenu()//függvény meghívása
-    active.reset()//mezők törlése
+      szerzo: szerzovalue, // szerző input értékének lekérése
+      korszak: korszakvalue, // korszak input értékének lekérése
+      szerelem1: szerelem1value, // első szerelme input értékének lekérése
+      szerelem2: szerelem2value == '' ? undefined : szerelem2value // második szerelme input értékének lekérése ha nincs akkor undefined
+    };
+    adatok.push(ujszerzo); // új elem hozzáadása a tömbhöz
+    tbody.innerHTML = ""; // törzs tartalmának törlése
+    rendermenu(); // függvény meghívása
+    active.reset(); // mezők törlése
   }
-})
+});
 
-function validatefiled(bemenet, errorField, error) {//validálás függvény
-  let validation = true//validálás igaz értékkel kezdődik
-  if (bemenet.trim() === "") {//ha nincs érték akkor hiba
-    errorField.innerHTML = error//hiba kiírása
-    validation = false//ha nincs érték akkor hamis lesz
+function validateField(bemenet, errorField, error) { // validálás függvény
+  let valid = true; // validálás igaz értékkel kezdődik
+  if (bemenet.trim() === "") { // ha nincs érték akkor hiba
+    errorField.innerHTML = error; // hiba kiírása
+    valid = false; // ha nincs érték akkor hamis lesz
   }
-  return validation//igaz érték visszaadása
+  return valid; // igaz érték visszaadása
 }
-rendermenu()//függvény meghívása
+
+function validateCheckbox(checkbox, bemenet, errorField, error) { // checkbox validálás függvény
+  if (checkbox && (bemenet === undefined || bemenet.trim() === "")) { // ha a checkbox be van jelölve és nincs érték
+    errorField.innerHTML = error; // hiba kiírása
+    return false; // ha nem validált akkor hamis lesz
+  }
+  return true; // igaz érték visszaadása
+}
+
+rendermenu(); // függvény meghívása
