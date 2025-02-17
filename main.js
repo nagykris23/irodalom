@@ -38,18 +38,11 @@ table.appendChild(thead)//thead appendChildolása a táblázathoz
 const tablehead = document.createElement('tr') // tr fejléc létrehozása
 table.appendChild(tablehead)// a  sor hozzáadása a táblázasthoz
 
-const thszerzo = document.createElement('th')// fejléc cella létrehozása
-thszerzo.innerHTML = adatok[0].szerzo // megadjuk a cella tartalmát a tömbbünk segítségével
-tablehead.appendChild(thszerzo)// cella hozzá adása a fejléc sorához
-
-const thkorszak = document.createElement('th')// újabb fejléc cella létrehozása
-thkorszak.innerHTML = adatok[0].korszak //megadjuk a cella tartalmát a tömbbünk segítségével
-tablehead.appendChild(thkorszak)//cella hozzá adása a fejléc sorához
-
-const thszerelem = document.createElement('th')//második szerelmének a fejléc cella létrehozása
-thszerelem.innerHTML = adatok[0].szerelem// megadjuk a cella tartalmát a tömbbünk segítségével
-tablehead.appendChild(thszerelem)//cella hozzá adása a fejléc sorához
-
+for(const i of Object.values(adatok[0])){//ciklus az adatok tömb elemeinek bejárására
+  const th = document.createElement('th')//th elem létrehozása
+  th.innerHTML = i//th elem tartalmának megadása
+  tablehead.appendChild(th)//th elem hozzáadása a sorhoz
+}
 //táblázat törzsének létrehozása
 const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
