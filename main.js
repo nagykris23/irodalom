@@ -48,6 +48,15 @@ const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
 //függvény bevezetése
+/**
+ * táblázat létrehozása
+ * @param {string} szerzo szerző neve
+ * @param {string} korszak korszak neve
+ * @param {string} szerelem1 első szerelme
+ * @param {string} szerelem2 második szerelme
+ * @returns {void}
+ * 
+ */
 function rendermenu() {//táblázat létrehozása a függvényben
   tbody.innerHTML = ""//törzs tartalmának törlése
   //ciklus a tömb elemeinek bejárására
@@ -87,6 +96,13 @@ form.id = 'form';// form id beállítása
 form.action = '#';// form action beállítása
 
 // Mezők létrehozása
+/**
+ * 
+ * @param {string} labelText 
+ * @param {string} inputId 
+ * @param {string} inputName 
+ * @param {string} type 
+ */
 function createForm(labelText, inputId, inputName, type = 'text') {
     const label = document.createElement('label');// label elem létrehozása
     label.htmlFor = inputId;// label for attribútum beállítása
@@ -178,7 +194,13 @@ document.getElementById("form").addEventListener("submit", function (e) {
     active.reset(); // mezők törlése
   }
 });
-
+/**
+ * 
+ * @param {string} bemenet 
+ * @param {string} errorField 
+ * @param {string} error 
+ * @returns 
+ */
 function validateField(bemenet, errorField, error) { // validálás függvény
   let valid = true; // validálás igaz értékkel kezdődik
   if (bemenet.trim() === "") { // ha nincs érték akkor hiba
@@ -187,7 +209,14 @@ function validateField(bemenet, errorField, error) { // validálás függvény
   }
   return valid; // igaz érték visszaadása
 }
-
+/**
+ * 
+ * @param {HTMLInputElement} checkbox 
+ * @param {string} bemenet 
+ * @param {string} errorField 
+ * @param {string} error 
+ * @returns 
+ */
 function validateCheckbox(checkbox, bemenet, errorField, error) { // checkbox validálás függvény
   if (checkbox && (bemenet === undefined || bemenet.trim() === "")) { // ha a checkbox be van jelölve és nincs érték
     errorField.innerHTML = error; // hiba kiírása
