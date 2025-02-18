@@ -48,7 +48,7 @@ const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
 //függvény bevezetése
-function rendermenu() {
+function rendermenu() {//táblázat létrehozása a függvényben
   tbody.innerHTML = ""//törzs tartalmának törlése
   //ciklus a tömb elemeinek bejárására
   for (let i = 1; i < adatok.length; i++) {//adatok tömb elemeinek bejárása
