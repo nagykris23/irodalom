@@ -81,21 +81,72 @@ function rendermenu() {//táblázat létrehozása a függvényben
 
   }
 }
-//esemény kezelő függvény bevezetése
+// Form létrehozása
+const form = document.createElement('form');// form elem létrehozása
+form.id = 'form';// form id beállítása
+form.action = '#';// form action beállítása
+
+// Mezők létrehozása
+function createForm(labelText, inputId, inputName, type = 'text') {
+    const label = document.createElement('label');// label elem létrehozása
+    label.htmlFor = inputId;// label for attribútum beállítása
+    label.innerHTML = labelText;// label szöveg beállítása
+    const input = document.createElement('input');// input elem létrehozása
+    input.type = type;// input típus beállítása
+    input.id = inputId;// input id beállítása
+    input.name = inputName; // input name beállítása
+    const errorDiv = document.createElement('div');// hibauzenet hely létrehozása
+    errorDiv.id = `${inputId}-error`;// hibauzenet id beállítása
+    errorDiv.className = 'error';// hibauzenet osztály beállítása
+    form.appendChild(label);// label hozzáadása a formhoz
+    form.appendChild(document.createElement('br'));// új sor létrehozása
+    form.appendChild(input);// input hozzáadása a formhoz
+    form.appendChild(document.createElement('br'));// új sor létrehozása
+    form.appendChild(document.createElement('br'));// új sor létrehozása
+    form.appendChild(errorDiv);// hibauzenet hely hozzáadása
+    form.appendChild(document.createElement('br'));// új sor létrehozása
+}
+
+// Form elemeinek létrehozása
+createForm('Költő neve:', 'kolto_nev', 'kolto_nev');// költő neve mező létrehozása
+createForm('Korszak:', 'korszak', 'korszak');// korszak mező létrehozása
+createForm('Szerelme:', 'szerelem1', 'szerelem1'); // első szerelem mező létrehozása
+
+const checkboxLabel = document.createElement('label');// checkbox label létrehozása
+checkboxLabel.htmlFor = 'masodik';// checkbox label for attribútum beállítása
+checkboxLabel.innerHTML = 'Volt másik szerelme?';// checkbox label szöveg beállítása
+const checkbox = document.createElement('input');// checkbox létrehozása
+checkbox.type = 'checkbox';// checkbox típus beállítása
+checkbox.id = 'masodik';// checkbox id beállítása
+checkbox.name = 'masodik';// checkbox name beállítása
+form.appendChild(checkboxLabel);// checkbox label hozzáadása a formhoz
+form.appendChild(checkbox);// checkbox hozzáadása a formhoz
+form.appendChild(document.createElement('br'));// új sor létrehozása
+form.appendChild(document.createElement('br'));// új sor létrehozása
+
+createForm('Szerelme:', 'szerelem2', 'szerelem2');// második szerelem mező létrehozása
+
+// Gomb hozzáadása
+const button = document.createElement('button');// gomb létrehozása
+button.innerHTML = 'Hozzáadás';// gomb szöveg beállítása
+form.appendChild(button);// gomb hozzáadása a formhoz
+
+// Form hozzáadása a dokumentumhoz
+document.body.appendChild(form);// form hozzáadása a body-hoz
 
 document.getElementById("form").addEventListener("submit", function (e) {
-  e.preventDefault(); // esemény megállítása
+  e.preventDefault();// esemény megállítása
 
-  const active = e.currentTarget; // aktuális elem
-  const errormezo = active.querySelectorAll(".error"); // error mező lekérése
+  const active = e.currentTarget;// aktuális elem
+  const errormezo = active.querySelectorAll(".error");// error mező lekérése
 
-  const szerzovalue = document.getElementById("kolto_nev").value; // szerző input értékének lekérése
-  const korszakvalue = document.getElementById("korszak").value; // korszak input értékének lekérése
-  const szerelem1value = document.getElementById("szerelem1").value; // első szerelme input értékének lekérése
-  const szerelemcheckbox = document.getElementById("masodik").checked; // második szerelme input mezőjének lekérése
-  const szerelem2value = szerelemcheckbox ? document.getElementById("szerelem2").value : undefined; // második szerelme input értékének lekérése
+  const szerzovalue = document.getElementById("kolto_nev").value;// szerző input értékének lekérése
+  const korszakvalue = document.getElementById("korszak").value;// korszak input értékének lekérése
+  const szerelem1value = document.getElementById("szerelem1").value;// első szerelme input értékének lekérése
+  const szerelemcheckbox = document.getElementById("masodik").checked;// második szerelme input mezőjének lekérése
+  const szerelem2value = szerelemcheckbox ? document.getElementById("szerelem2").value : undefined;// második szerelme input értékének lekérése
 
-  let validated = true; // validálás igaz értékkel kezdődik
+  let validated = true;// validálás igaz értékkel kezdődik
   for (let i = 0; i < errormezo.length; i++) { // ciklus a hibák kiírására
     errormezo[i].innerHTML = ""; // hibák kiírásának törlése
   }
