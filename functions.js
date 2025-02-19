@@ -1,3 +1,22 @@
+// Fejléc generálása
+function generateTableHeader() {
+    thead.innerHTML = ""//törzs tartalmának törlése
+    const tablehead = document.createElement('tr') // tr fejléc létrehozása
+    thead.appendChild(tablehead)// a  sor hozzáadása a táblázasthoz
+
+    // Fejléc elemeinek hozzáadása
+    const fejlec = ['Szerző', 'Korszak', 'Szerelmek'];//fejléc elemeinek létrehozása
+    for(const fejleclista of fejlec ){//fejléc elemeinek bejárása
+      const th = document.createElement('th')//th elem létrehozása
+      th.innerHTML = fejleclista//th elem tartalmának beállítása
+      if (fejleclista === 'Szerelmek') {//ha a fejléc eleme szerelmei akkor két cellát foglaljon el
+        th.colSpan = 2//ha a fejléc eleme szerelmei akkor két cellát foglaljon el
+      }
+      tablehead.appendChild(th)//th elem hozzáadása a sorhoz
+    }
+}
+
+
 //függvény bevezetése
 /**
  * táblázat létrehozása
@@ -25,19 +44,20 @@ function rendermenu() {//táblázat létrehozása a függvényben
       sor.appendChild(tdkorszak)//második cella hozzáadása a sorhoz
   
       const tdszerelem1 = document.createElement('td')//harmadik cella létrehozása
-      if (adat.szerelem1 === " " && adat.szerelem2 ===  " ") {//ha nincs elso és masodik szerelme se akkor vonja össze a 2 cellát és "-" jelet irja ki
+      if (!adat.szerelem1  && !adat.szerelem2) {//ha nincs elso és masodik szerelme se akkor vonja össze a 2 cellát és "-" jelet irja ki
         tdszerelem1.colSpan = 2//összevonja a két cellát
         tdszerelem1.innerHTML = " - "//ha nincs elso és masodik szerelme se akkor vonja össze a 2 cellát és "-" jelet irja ki
-      } else {
+      }else if(adat.szerelem1&&!adat.szerelem2){//ha csak az elso szerelme van akkor csak egy cellába kerül
+        tdszerelem1.colSpan = 2//ha csak az elso szerelme van akkor csak egy cellába kerül
+        tdszerelem1.innerHTML = adat.szerelem1//harmadik cella tartalm
+
+      }else {
         tdszerelem1.innerHTML = adat.szerelem1 || "" // harmadik cella tartalmának megadása
-        if (adat.szerelem2 === undefined) { // ha nincs második szerelme
-          tdszerelem1.colSpan = 2; // összevonja a két cellát
-        }
       }
       sor.appendChild(tdszerelem1)//harmadik cella hozzáadása a sorhoz
   
       //ha van második szerelme akkor külön cellába kerül
-      if (adat.szerelem2 !== undefined) {//ha van második szerelme akkor külön cellába kerül
+      if (adat.szerelem2) {//ha van második szerelme akkor külön cellába kerül
         const tdszerelem2 = document.createElement('td')//negyedik cella létrehozása
         tdszerelem2.innerHTML = adat.szerelem2//negyedik cella tartalmának megadása
         sor.appendChild(tdszerelem2)//negyedik cella hozzáadása a sorhoz
