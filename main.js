@@ -39,7 +39,8 @@ table.appendChild(thead)//thead appendChildolása a táblázathoz
 const tbody = document.createElement('tbody')//törzs létrehozása
 table.appendChild(tbody)//törzs hozzáadása a táblázashoz
 
-document.getElementById("form").addEventListener("submit", function (e) {
+createFormField();//függvény meghívása
+document.getElementById("form").addEventListener("submit", function (e) {  
   e.preventDefault();// esemény megállítása
 
   const active = e.currentTarget;// aktuális elem
@@ -87,5 +88,7 @@ document.getElementById("form").addEventListener("submit", function (e) {
   }
 });
 
-generateTableHeader(); // Fejléc generálása
+
 rendermenu(); // függvény meghívása
+
+
