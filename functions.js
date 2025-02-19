@@ -1,6 +1,7 @@
 // Fejléc generálása
 /**
  * Fejléc generálása
+ *
  */
 function generateTableHeader() {
   const thead = document.querySelector("thead"); // thead lekérése
@@ -70,12 +71,13 @@ function rendermenu() { // táblázat létrehozása a függvényben
 // Mezők létrehozása
 /**
  * Mezők létrehozása
+ * @param {HTMLElement} form form elem
  * @param {string} labelText mező szövege
  * @param {string} inputId mező id-je
  * @param {string} inputName mező name-je
  * @param {string} type mező típusa
  */
-function createFormField(form, labelText, inputId, inputName, type = 'text') {
+function createFormField(form, labelText, inputId, inputName, type = 'text') { // mező létrehozása függvény
   const label = document.createElement('label'); // label elem létrehozása
   label.htmlFor = inputId; // label for attribútum beállítása
   label.innerHTML = labelText; // label szöveg beállítása
@@ -93,6 +95,41 @@ function createFormField(form, labelText, inputId, inputName, type = 'text') {
   form.appendChild(document.createElement('br')); // új sor létrehozása
   form.appendChild(errorDiv); // hibauzenet hely hozzáadása
   form.appendChild(document.createElement('br')); // új sor létrehozása
+}
+/**
+ * form létrehozása
+ */
+function createForm() { // Form létrehozása
+  const form = document.createElement('form'); // form elem létrehozása
+  form.id = 'form'; // form id beállítása
+  form.action = '#'; // form action beállítása
+
+  // Form elemeinek létrehozása
+  createFormField(form, 'Költő neve:', 'kolto_nev', 'kolto_nev'); // költő neve mező létrehozása
+  createFormField(form, 'Korszak:', 'korszak', 'korszak'); // korszak mező létrehozása
+  createFormField(form, 'Szerelme:', 'szerelem1', 'szerelem1'); // első szerelem mező létrehozása
+
+  const checkboxLabel = document.createElement('label'); // checkbox label létrehozása
+  checkboxLabel.htmlFor = 'masodik'; // checkbox label for attribútum beállítása
+  checkboxLabel.innerHTML = 'Volt másik szerelme?'; // checkbox label szöveg beállítása
+  const checkbox = document.createElement('input'); // checkbox létrehozása
+  checkbox.type = 'checkbox'; // checkbox típus beállítása
+  checkbox.id = 'masodik'; // checkbox id beállítása
+  checkbox.name = 'masodik'; // checkbox name beállítása
+  form.appendChild(checkboxLabel); // checkbox label hozzáadása a formhoz
+  form.appendChild(checkbox); // checkbox hozzáadása a formhoz
+  form.appendChild(document.createElement('br')); // új sor létrehozása
+  form.appendChild(document.createElement('br')); // új sor létrehozása
+
+  createFormField(form, 'Szerelme:', 'szerelem2', 'szerelem2'); // második szerelem mező létrehozása
+
+  // Gomb hozzáadása
+  const button = document.createElement('button'); // gomb létrehozása
+  button.innerHTML = 'Hozzáadás'; // gomb szöveg beállítása
+  form.appendChild(button); // gomb hozzáadása a formhoz
+
+  // Form hozzáadása a dokumentumhoz
+  document.body.appendChild(form); // form hozzáadása a body-hoz
 }
 
 // Validációs függvények
